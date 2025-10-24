@@ -1,42 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Artists List</h1>
-        <a href="/" class="btn btn-secondary btn-sm">Back to Home</a>
-    </div>
-
+<div class="container mt-4">
     <div class="card shadow-sm">
         <div class="card-body">
-            @if($artists->isEmpty())
-            <p class="text-center text-muted mb-0">No artists found.</p>
-            @else
-            <table class="table table-striped table-hover align-middle">
-
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Code</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Created At</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($artists as $artist)
-                    <tr>
-                        <td>{{ $artist->id }}</td>
-                        <td>{{ $artist->code}}</td>
-                        <td>{{ $artist->name }}</td>
-                        <td>{{ $artist->created_at->format('Y-m-d') }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            @endif
-            <div class="d-flex justify-content-center mt-4">
-                {{ $artists->links('pagination::bootstrap-5') }}
-            </div>
+            <h4>{{ $artist->name }}</h4>
+            <p><strong>Code:</strong> {{ $artist->code ?? 'N/A' }}</p>
+            <p><strong>Created At:</strong> {{ $artist->created_at->format('Y-m-d') }}</p>
+            <a href="{{ route('artists.index') }}" class="btn btn-secondary">Back</a>
         </div>
     </div>
 </div>

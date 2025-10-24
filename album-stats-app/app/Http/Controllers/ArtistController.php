@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artist;
+use Illuminate\Console\Events\ArtisanStarting;
 use Illuminate\Http\Request;
 
 class ArtistController extends Controller
@@ -13,7 +14,7 @@ class ArtistController extends Controller
     public function index()
     {
         $artists = Artist::orderBy('id')->paginate(10);
-        return view('artists.artists_show', compact('artists'));
+        return view('artists.artists_index', compact('artists'));
     }
 
     /**
@@ -21,7 +22,7 @@ class ArtistController extends Controller
      */
     public function create()
     {
-        //
+        return view('artists.artists_create');
     }
 
     /**
@@ -29,15 +30,23 @@ class ArtistController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:artists,name',
+        ]);
+
+        Artist::create($validated);
+
+        return redirect()->route('artists.index')
+            ->with('success', 'Artist added successfully!');
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(Artist $artist)
     {
-        //
+        return view('artists.artists_show', compact('artist'));
     }
 
     /**
@@ -45,7 +54,7 @@ class ArtistController extends Controller
      */
     public function edit(Artist $artist)
     {
-        //
+        return view('artists.artists_edit', compact('artist'));
     }
 
     /**
@@ -53,7 +62,15 @@ class ArtistController extends Controller
      */
     public function update(Request $request, Artist $artist)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:artists,name,' . $artist->id,
+            'code' => 'nullable|string|max:100',
+        ]);
+
+        $artist->update($validated);
+
+        return redirect()->route('artists.index')
+            ->with('success', 'Artist updated successfully!');
     }
 
     /**
@@ -61,6 +78,9 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist)
     {
-        //
+        $artist->delete();
+
+        return redirect()->route('artists.index')
+            ->with('success', 'Artist deleted successfully!');
     }
 }

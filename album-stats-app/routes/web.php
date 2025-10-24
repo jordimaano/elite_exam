@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArtistController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -10,4 +11,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/artists', [App\Http\Controllers\ArtistController::class, 'index'])->name('artists.show');
+Route::resource('artists', ArtistController::class);
+// Route::get('/artists', [App\Http\Controllers\ArtistController::class, 'index'])->name('artists.index');
+// Route::get('/artists/create', [App\Http\Controllers\ArtistController::class, 'create'])->name('artists.create');
+// Route::post('/artists/store', [App\Http\Controllers\ArtistController::class, 'store'])->name('artists.store');
