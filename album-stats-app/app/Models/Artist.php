@@ -11,6 +11,7 @@ class Artist extends Model
         'code',
         'name'
     ];
+
     protected static function boot()
     {
         parent::boot();
@@ -30,5 +31,9 @@ class Artist extends Model
             // Format the new code (e.g., A-1, A-2, A-10)
             $artist->code = 'A-' . $newNumber;
         });
+    }
+    public function albums()
+    {
+        return $this->hasMany(Album::class);
     }
 }
