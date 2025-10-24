@@ -12,8 +12,12 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('artists', ArtistController::class);
-Route::resource('albums', AlbumController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::resource('artists', ArtistController::class);
+    Route::resource('albums', AlbumController::class);
+});
+// Route::resource('artists', ArtistController::class);
+// Route::resource('albums', AlbumController::class);
 // Route::get('/artists', [App\Http\Controllers\ArtistController::class, 'index'])->name('artists.index');
 // Route::get('/artists/create', [App\Http\Controllers\ArtistController::class, 'create'])->name('artists.create');
 // Route::post('/artists/store', [App\Http\Controllers\ArtistController::class, 'store'])->name('artists.store');
