@@ -15,4 +15,8 @@ class Album extends Model
         'album_cover',
         'artist_id',
     ];
+    public function artist()
+    {
+        return $this->belongsTo(Artist::class);
+    }
 }
